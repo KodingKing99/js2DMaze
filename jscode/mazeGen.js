@@ -22,7 +22,11 @@ let getNeighbors = (x, y) => {
 // returns cell object
 let getCell = (x, y) => {
     let that = {};
-    //by default the neighboring cells as walls;
+    //by default, the cell has no neighbors in the maze
+    // I'm planning on using this array to store the 'walls'
+    // by 'remove wall' I will add that cell as a neighbor
+    that.mazeNeighbors = [];
+    // By default, the walls are the neighbors of x and y
     that.walls = getNeighbors(x, y);
     that.isMaze = false;
     that.getX = function(){
@@ -31,11 +35,14 @@ let getCell = (x, y) => {
     that.getY = function(){
         return y;
     }
-    that.getWalls = function(){
-        return this.walls;
+    that.getMazeNeighbors = function(){
+        return this.mazeNeighbors;
     }
-    that.setWalls = (array) => {
-        this.walls = array;
+    that.setMazeNeighbors = (array) => {
+        this.mazeNeighbors = array;
+    }
+    that.getRandomWall = function(){
+        
     }
     return that;
 }
@@ -45,7 +52,6 @@ let getMaze = (x, y) => {
         let inner = [];
         for(var j = 0; j < y; j++){
             let cell = getCell(i, j);
-            console.log(cell);
             inner.push(cell);    
         }
         maze.push(inner);
@@ -56,8 +62,9 @@ let getMaze = (x, y) => {
 let getGameState = () => {
     let that = {};
     let maze = getMaze(WIDTH, HEIGHT);
-    let frontier = [];
+    // let frontier = [];
     that.maze = maze;
+    that.frontier = [];
     that.addToMaze = (x, y) => {
         // add the cell to the maze
         maze[x][y].isMaze = true;
@@ -68,27 +75,37 @@ let getGameState = () => {
         let neigbors = getNeighbors(x, y);
         console.log(neigbors);
         // loop through, add neighbor to frontier if it is not in the maze
-        for(let i = 0; i < neigbors; ++i){
+        for(let i = 0; i < neigbors.length; i++){
+            console.log("in loop for adding neighbors")
             let myCell = maze[neigbors[i][0]][neigbors[i][1]];
             console.log(myCell);
             if(!myCell.isMaze){
-                frontier.push(myCell);
+                that.frontier.push(myCell);
             }
         } 
     }
-    // that.getFrontier = () => {
-    //     return frontier;
-    // }
-    // that.setFrontier = (array) => {
-    //     that.frontier = array;
-    // } 
     return that;
 }
-let gamestate = getGameState([]);
-console.log(gamestate);
-let x = Math.floor(Math.random() * 10);
-let y = Math.floor(Math.random() * 10);
+let addCellToMaze = (state) => {
+    let x = Math.floor(Math.random() * WIDTH);
+    let y = Math.floor(Math.random() * HEIGHT);
+    console.log(`Adding a cell (${x}, ${y}) : position: (${state.maze[x][y].getX()}, ${state.maze[x][y].getY()}) to the frontier `)
+    state.addNeighborsToFrontier(x, y);
+}
+let spreadMazeCells = (state) => {
+    console.log("Procreating...");
+    // let x = Math.floor(Math.random() * WIDTH);
+    // let y = Math.floor(Math.random() * HEIGHT);
+    let index = Math.floor(Math.random() * state.frontier.length);
+    console.log(`Picking frontier cell: (${state.frontier[index].getX()}, ${state.frontier[index].getY()})`)
+    console.log(state.frontier[index]);
 
-console.log(`Adding a cell (${x}, ${y}) : position: (${gamestate.maze[x][y].getX()}, ${gamestate.maze[x][y].getY()}) to the frontier `)
-gamestate.addNeighborsToFrontier(x, y)
-console.log(gamestate);
+}
+let generateMaze = () => {
+    let gamestate = getGameState();
+    console.log(gamestate);
+    addCellToMaze(gamestate); 
+    console.log(gamestate);
+    spreadMazeCells(gamestate);
+}
+generateMaze();
