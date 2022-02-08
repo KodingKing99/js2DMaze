@@ -1,6 +1,6 @@
 // Grid size x and y
-let WIDTH = 10;
-let HEIGHT = 10;
+let WIDTH = 5;
+let HEIGHT = 5;
 let findIndexForTuple = (array, x, y) => {
     let index = -1;
     for(let i = 0; i < array.length; i++){
@@ -62,20 +62,8 @@ let getCell = (x, y) => {
     }
     // Removes a wall from walls array
     that.removeWall = function(x, y) {
-        
-        console.log(`Removing wall (${x}, ${y}) for cell (${this.getX()}, ${this.getY()})`)
-        console.log("cell walls before remove:")
-        let wallz = [...this.walls]
-        console.log(wallz);
-        // console.log("index in array to remove: ")
-        // console.log(findIndexForTuple(this.walls, x, y));
+        // console.log(`Removing wall (${x}, ${y}) for cell (${this.getX()}, ${this.getY()})`)
         this.walls.splice(findIndexForTuple(this.walls, x, y), 1);
-        console.log("cell walls after remove:")
-        console.log(this.walls);
-        // wallz = [[0, 1]];
-        // console.log("testing...")
-        // console.log(findIndexForTuple(wallz, 0, 1))
-        // console.log(wallz.find)
     }
     that.reportNeighbors = function(){
         console.log(`Reporting maze neighbors for cell ... (${this.getX()}, ${this.getY()})`)
@@ -84,6 +72,14 @@ let getCell = (x, y) => {
         }
         console.log(this.mazeNeighbors)
     }
+    // that.cellString = function(){
+    //     // let defaultWalls = getNeighbors(x, y);
+    //     // let retString = "";
+    //     // for(let i = 0; i < this.walls.length; i++){
+    //         // if(i === 0 && walls[i] === defaultWalls)
+    //     // }
+        
+    // }
     return that;
 }
 let getMaze = (x, y) => {
@@ -109,7 +105,13 @@ let getGameState = () => {
         // add the cell to the maze
         this.maze[x][y].isMaze = true;
     }
-    
+    // that.mazeToString = function() {
+    //     for(let i = 0; i < this.maze.length; i++){
+    //         for(let j = 0; j < this.maze[i].length; j++){
+    //             console.log(this.maze[i][j].cellString());
+    //         }
+    //     }
+    // }
     that.addNeighborsToFrontier = function(x, y) {
         // get neighbors
         console.log("Adding cells neighbors to frontier")
@@ -127,46 +129,44 @@ let getGameState = () => {
     }
     
     that.updateNeighbors = function(mazeX, mazeY, frontierX, frontierY){
-        console.log("Updating cell neighbors...")
+        // console.log("Updating cell neighbors...")
         // Add frontier cell as a neighbor
         this.maze[mazeX][mazeY].mazeNeighbors.push(this.maze[frontierX][frontierY])
         this.maze[frontierX][frontierY].mazeNeighbors.push(this.maze[mazeX][mazeY])
-        console.log("Maze cell after updating maze neighbors")
-        console.log(this.maze[mazeX][mazeY]);
-        console.log(this.maze[mazeX][mazeY].reportNeighbors());
-        console.log("Frontier cell after updating maze neighbors")
-        console.log(this.maze[frontierX][frontierY].reportNeighbors())
+        // console.log("Maze cell after updating maze neighbors")
+        // console.log(this.maze[mazeX][mazeY]);
+        // console.log(this.maze[mazeX][mazeY].reportNeighbors());
+        // console.log("Frontier cell after updating maze neighbors")
+        // console.log(this.maze[frontierX][frontierY].reportNeighbors())
     }
     that.removeWall = function(mazeX, mazeY, frontierX, frontierY){
-        console.log("removing Walls for cells...")
+        // console.log("removing Walls for cells...")
         this.maze[mazeX][mazeY].removeWall(frontierX, frontierY);
         this.maze[frontierX][frontierY].removeWall(mazeX, mazeY);
-        console.log("Maze cell after removing walls")
-        console.log(this.maze[mazeX][mazeY])
-        console.log("Frontier cell after removing walls")
-        console.log(this.maze[frontierX][frontierY])
+        // console.log("Maze cell after removing walls")
+        // console.log(this.maze[mazeX][mazeY])
+        // console.log("Frontier cell after removing walls")
+        // console.log(this.maze[frontierX][frontierY])
     }
-    // that.removeCellFromFrontier = (frontierIndex) => {
-    //     console.log("Removing cell from frontier");
-    //     console.log("Frontier before splice")
-    //     console.log(this.frontier);
-    //     this.frontier.splice(frontierIndex, 1);
-    //     console.log("Frontier after splice")
-    //     console.log(this.frontier);
-    // }
+    that.removeCellFromFrontier = function(frontierIndex){
+        this.frontier.splice(frontierIndex, 1);
+    }
     that.updateCells = function(mazeX, mazeY, frontierX, frontierY, frontierIndex){
-        console.log("Updating frontier and maze cells...");
-        // console.log(this)
+        // console.log("Updating frontier and maze cells...");
         this.addToMaze(frontierX, frontierY);
         this.updateNeighbors(mazeX, mazeY, frontierX, frontierY);
         this.removeWall(mazeX, mazeY, frontierX, frontierY);
-        // this.removeCellFromFrontier(frontierIndex);
+        this.removeCellFromFrontier(frontierIndex);
+        this.addNeighborsToFrontier(frontierX, frontierY);
     }
     return that;
 }
 let addCellToMaze = (state) => {
-    let x = Math.floor(Math.random() * WIDTH);
-    let y = Math.floor(Math.random() * HEIGHT);
+    // let x = Math.floor(Math.random() * WIDTH);
+    // let y = Math.floor(Math.random() * HEIGHT);
+    // Starting Cell
+    let x = 0;
+    let y = 0;
     state.addToMaze(x, y);
     console.log(`Adding a cell (${x}, ${y}) : position: (${state.maze[x][y].getX()}, ${state.maze[x][y].getY()}) to the maze `)
     console.log("adding cell's neighbors to the frontier")
@@ -176,22 +176,27 @@ let spreadMazeCells = (state) => {
     console.log("Procreating...");
     // let x = Math.floor(Math.random() * WIDTH);
     // let y = Math.floor(Math.random() * HEIGHT);
-    let index = Math.floor(Math.random() * state.frontier.length);
-    let frontierCell = state.frontier[index];
-    console.log(`Picking frontier cell: (${state.frontier[index].getX()}, ${state.frontier[index].getY()})`)
-    console.log(state.frontier[index]);
-    let wallInMaze = frontierCell.getRandomWall();
-    // console.log("Random wall picked: ")
-    // console.log(wallInMaze);
-    // console.log(state.maze[wallInMaze[0]][wallInMaze[1]]); 
-    while(!state.maze[wallInMaze[0]][wallInMaze[1]].isMaze){
-        wallInMaze = frontierCell.getRandomWall();
+    while(state.frontier.length > 0){
+        let index = Math.floor(Math.random() * state.frontier.length);
+        let frontierCell = state.frontier[index];
+        console.log(`Picking frontier cell: (${state.frontier[index].getX()}, ${state.frontier[index].getY()})`)
+        console.log(state.frontier[index]);
+        let wallInMaze = frontierCell.getRandomWall();
+        if(wallInMaze === null){
+            continue;
+        }
+        // console.log("Random wall picked: ")
+        // console.log(wallInMaze);
+        // console.log(state.maze[wallInMaze[0]][wallInMaze[1]]); 
+        while(!state.maze[wallInMaze[0]][wallInMaze[1]].isMaze){
+            wallInMaze = frontierCell.getRandomWall();
+        }
+        console.log("wall in maze picked: ")
+        console.log(wallInMaze);
+        console.log(state.maze[wallInMaze[0]][wallInMaze[1]]);
+        state.updateCells(wallInMaze[0], wallInMaze[1], frontierCell.getX(), frontierCell.getY(), index);
     }
-    console.log("wall in maze picked: ")
-    console.log(wallInMaze);
-    console.log(state.maze[wallInMaze[0]][wallInMaze[1]]); 
-    state.updateCells(wallInMaze[0], wallInMaze[1], frontierCell.getX(), frontierCell.getY(), index);
-
+    
 }
 let generateMaze = () => {
     let gamestate = getGameState();
@@ -199,5 +204,6 @@ let generateMaze = () => {
     addCellToMaze(gamestate); 
     console.log(gamestate);
     spreadMazeCells(gamestate);
+    console.log(gamestate.maze)
 }
 generateMaze();
