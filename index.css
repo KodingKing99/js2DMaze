@@ -1,0 +1,31 @@
+.header{
+    /* align-items: center; */
+    text-align: center;
+    background-color: forestgreen;
+    /* border: 2px solid black; */
+    border-radius: 10px;
+    margin: 20px;
+    padding: 10px;
+}
+.menuContainer{
+    display: block;
+    text-align: center;
+}
+.menu{
+    /* text-align: center; */
+    display: inline-flex;
+    text-align: center;
+    padding: 10px;
+    background-color: forestgreen;
+    margin: auto;
+    border-radius: 10px;
+    /* align-self: center; */
+}
+span{
+    margin: 20px;
+    padding: 5px;
+}
+.pTitle{
+    font-size: medium;
+    text-decoration: underline;
+}

@@ -9,9 +9,27 @@
 </head>
 <body>
 	<div class='root'>
-			<h1>Pan's Labrynth</h1>
-		<div id='gameLoopDiv'>
-		</div>
+			<div class="header">
+				<h1>Pan's Labrynth</h1>
+				<h3>Created by Nick Sorenson for CS 5410</h3>
+			</div>
+			<div class="menuContainer">
+				<div class="menu">
+					<span><p class="pTitle">Score</p><p>0</p></span>
+					<span><p class="pTitle">High Score</p><p>0</p></span>
+					<span><p class="pTitle">Timer</p><p>0</p></span>
+					<span><p class="pTitle">Maze Size:</p>
+						<button id="5x5butt">5X5</button>
+						<button id="10x10butt">10X10</button>
+						<button id="15x15butt">15X15</button>
+						<button id="20x20butt">20X20</button>
+					</span>
+				</div>
+			</div>
+			<div id="canvasDiv">
+				<!-- <canvas -->
+			</div>
+			
 	</div>
 	<script src='./jscode/mazeGen.js'></script>
 </body>
