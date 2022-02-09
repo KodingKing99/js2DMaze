@@ -146,9 +146,9 @@ let getMaze = (x, y) => {
     return maze;
 }
 // Returns a gamestate object with getters and setters
-let getGameState = () => {
+let getGameState = (width, height) => {
     let that = {};
-    let maze = getMaze(WIDTH, HEIGHT);
+    let maze = getMaze(width, height);
     // let frontier = [];
     that.maze = maze;
     that.frontier = [];
@@ -244,8 +244,8 @@ let spreadMazeCells = (state) => {
     }
     
 }
-let generateMaze = () => {
-    let gamestate = getGameState();
+let generateMaze = (width, height) => {
+    let gamestate = getGameState(width, height);
     console.log(gamestate);
     gamestate.reportMazeWalls()
     addCellToMaze(gamestate); 
@@ -255,4 +255,4 @@ let generateMaze = () => {
     gamestate.reportMazeWalls()
 
 }
-generateMaze();
+generateMaze(WIDTH, HEIGHT);

@@ -29,3 +29,7 @@ span{
     font-size: medium;
     text-decoration: underline;
 }
+#canvas{
+    width: 50%;
+    height: 50%;
+}
