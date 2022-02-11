@@ -1,0 +1,18 @@
+that.mazeNeighbors = {
+        "TOP": null,
+        "LEFT": null,
+        "RIGHT": null,
+        "BOTTOM": null
+    };
+that.updateNeighbors = function(mazeX, mazeY, frontierX, frontierY){
+        // Add frontier cell as a neighbor
+        console.log("Updating neighbors for maze and frontier cell")
+        // this.maze[mazeX][mazeY].mazeNeighbors.push(this.maze[frontierX][frontierY])
+        this.maze[mazeX][mazeY].mazeNeighbors[getWallChar([frontierX, frontierY], mazeX, mazeY)[0]] = this.maze[frontierX][frontierY];
+        this.maze[frontierX][frontierY].mazeNeighbors[getWallChar([mazeX, mazeY], frontierX, frontierY)[0]] = this.maze[mazeX][mazeY];
+        console.log("maze cell")
+        this.maze[mazeX][mazeY].reportNeighbors();
+        console.log("frontier cell")
+        this.maze[frontierX][frontierY].reportNeighbors();
+        // this.maze[frontierX][frontierY].mazeNeighbors.push(this.maze[mazeX][mazeY])
+    }
