@@ -57,7 +57,12 @@ let getCell = (x, y) => {
     //by default, the cell has no neighbors in the maze
     // I'm planning on using this array to store the 'walls'
     // by 'remove wall' I will add that cell as a neighbor
-    that.mazeNeighbors = [];
+    that.mazeNeighbors = that.mazeNeighbors = {
+        "TOP": null,
+        "LEFT": null,
+        "RIGHT": null,
+        "BOTTOM": null
+    };
     // By default, the walls are the neighbors of x and y
     that.walls = getNeighbors(x, y);
     that.isMaze = false;
@@ -91,9 +96,9 @@ let getCell = (x, y) => {
     }
     that.reportNeighbors = function(){
         console.log(`Reporting maze neighbors for cell ... (${this.getX()}, ${this.getY()})`)
-        for(let i = 0; i < this.mazeNeighbors.length; i++){
-            console.log(`(${this.mazeNeighbors[i].getX()}, ${this.mazeNeighbors[i].getY()})`)
-        }
+        // for(let i = 0; i < this.mazeNeighbors.length; i++){
+        //     console.log(`(${this.mazeNeighbors[i].getX()}, ${this.mazeNeighbors[i].getY()})`)
+        // }
         console.log(this.mazeNeighbors)
     }
     that.cellString = function(){
@@ -178,11 +183,23 @@ let getGameState = (width, height) => {
             for(let j = 0; j < this.maze[i].length; j++){
                 // retString += this.maze[i][j].cellString();
                 this.maze[i][j].reportWalls();
+                this.maze[i][j].reportNeighbors();
             }
             // retString += "\n";
         }
         // return retString;
     }
+    // that.reportMazeWalls = function() {
+    //     // let retString = ""
+    //     for(let i = 0; i < this.maze.length; i++){
+    //         for(let j = 0; j < this.maze[i].length; j++){
+    //             // retString += this.maze[i][j].cellString();
+    //             this.maze[i][j].reportWalls();
+    //         }
+    //         // retString += "\n";
+    //     }
+    //     // return retString;
+    // }
     that.addNeighborsToFrontier = function(x, y) {
         // get neighbors
         let neigbors = getNeighbors(x, y);
@@ -195,11 +212,17 @@ let getGameState = (width, height) => {
             }
         }
     }
-    
     that.updateNeighbors = function(mazeX, mazeY, frontierX, frontierY){
         // Add frontier cell as a neighbor
-        this.maze[mazeX][mazeY].mazeNeighbors.push(this.maze[frontierX][frontierY])
-        this.maze[frontierX][frontierY].mazeNeighbors.push(this.maze[mazeX][mazeY])
+        // console.log("Updating neighbors for maze and frontier cell")
+        // this.maze[mazeX][mazeY].mazeNeighbors.push(this.maze[frontierX][frontierY])
+        this.maze[mazeX][mazeY].mazeNeighbors[getWallChar([frontierX, frontierY], mazeX, mazeY)[0]] = this.maze[frontierX][frontierY];
+        this.maze[frontierX][frontierY].mazeNeighbors[getWallChar([mazeX, mazeY], frontierX, frontierY)[0]] = this.maze[mazeX][mazeY];
+        // console.log("maze cell")
+        // this.maze[mazeX][mazeY].reportNeighbors();
+        // console.log("frontier cell")
+        // this.maze[frontierX][frontierY].reportNeighbors();
+        // this.maze[frontierX][frontierY].mazeNeighbors.push(this.maze[mazeX][mazeY])
     }
     that.removeWall = function(mazeX, mazeY, frontierX, frontierY){
         this.maze[mazeX][mazeY].removeWall(frontierX, frontierY);
