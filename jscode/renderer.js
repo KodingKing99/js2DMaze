@@ -21,16 +21,12 @@ Maze.graphics = (function(){
         //     cell.x * (COORD_SIZE / 3), cell.y * (COORD_SIZE / 3),
         //     COORD_SIZE / 3 + 0.5, COORD_SIZE / 3 + 0.5);
         // }
-        console.log(cell)
-        console.log(`Postion: ${cell.getX()}, ${cell.getY()}`)
         cell.reportNeighbors();
-        // debugger;
-        // if (cell.mazeNeighbors["TOP"] === null) {
-        //     // console.log(`Moving to ${}`)
-        //     context.moveTo(cell.getX() * (COORD_SIZE / cellSize), cell.getY() * (COORD_SIZE / cellSize));
-        //     context.lineTo((cell.getX() + 1) * (COORD_SIZE / cellSize), cell.getY() * (COORD_SIZE / cellSize));
-        // }
-    
+        if (cell.mazeNeighbors["TOP"] === null) {
+            context.moveTo(cell.getX() * (COORD_SIZE / cellSize), cell.getY() * (COORD_SIZE / cellSize));
+            context.lineTo((cell.getX() + 1) * (COORD_SIZE / cellSize), cell.getY() * (COORD_SIZE / cellSize));
+        }
+        
         if (cell.mazeNeighbors["BOTTOM"] === null) {
             context.moveTo(cell.getX() * (COORD_SIZE / cellSize), (cell.getY() + 1) * (COORD_SIZE / cellSize));
             context.lineTo((cell.getX() + 1) * (COORD_SIZE / cellSize), (cell.getY() + 1) * (COORD_SIZE / cellSize));
@@ -45,25 +41,6 @@ Maze.graphics = (function(){
             context.moveTo(cell.getX() * (COORD_SIZE / cellSize), cell.getY() * (COORD_SIZE / cellSize));
             context.lineTo(cell.getX() * (COORD_SIZE / cellSize), (cell.getY() + 1) * (COORD_SIZE / cellSize));
         }
-        if (cell.mazeNeighbors["TOP"] === null) {
-            context.moveTo(cell.getY() * (COORD_SIZE / cellSize), cell.getX() * (COORD_SIZE / cellSize));
-            context.lineTo(cell.getY() * (COORD_SIZE / cellSize), (cell.getX() + 1) * (COORD_SIZE / cellSize));
-        }
-    
-        // if (cell.mazeNeighbors["BOTTOM"] === null) {
-        //     context.moveTo(cell.getY() + 1 * (COORD_SIZE / cellSize), cell.getX() * (COORD_SIZE / cellSize));
-        //     context.lineTo(cell.getY() + 1 * (COORD_SIZE / cellSize), (cell.getX() + 1) * (COORD_SIZE / cellSize));
-        // }
-    
-        // if (cell.mazeNeighbors["RIGHT"] === null) {
-        //     context.moveTo(cell.getY() * (COORD_SIZE / cellSize), (cell.getX() + 1) * (COORD_SIZE / cellSize));
-        //     context.lineTo((cell.getY() + 1) * (COORD_SIZE / cellSize), (cell.getX() + 1) * (COORD_SIZE / cellSize));
-        // }
-    
-        // if (cell.mazeNeighbors["LEFT"] === null) {
-        //     context.moveTo(cell.getY() * (COORD_SIZE / cellSize), cell.getX() * (COORD_SIZE / cellSize));
-        //     context.lineTo((cell.getY() + 1) * (COORD_SIZE / cellSize), cell.getX() * (COORD_SIZE / cellSize));
-        // }
     }
     function renderMaze(gameState, width, height) {
         // Render the cells first
@@ -71,7 +48,7 @@ Maze.graphics = (function(){
         // console.log(gameState);
         for (let row = 0; row < width; row++) {
             for (let col = 0; col < height; col++) {
-                drawCell(gameState.maze[col][row], width);
+                drawCell(gameState.maze[row][col], width);
             }
         }
         // console.log(gameState.maze[0][0])

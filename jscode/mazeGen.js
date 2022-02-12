@@ -1,6 +1,6 @@
 // Grid size x and y
-let WIDTH = 5;
-let HEIGHT = 5;
+let WIDTH = 3;
+let HEIGHT = 3;
 let findIndexForTuple = (array, x, y) => {
     let index = -1;
     for(let i = 0; i < array.length; i++){
@@ -19,13 +19,13 @@ let getNeighbors = (x, y) => {
     if(x > 0){ // left
         neighbors.push([x - 1, y]);
     }
-    if(y < HEIGHT - 1){ // top 
+    if(y < HEIGHT - 1){ // bottom 
         neighbors.push([x, y + 1]);
     }
     if(x < WIDTH - 1){ // right
         neighbors.push([x + 1, y]);
     }
-    if(y > 0){ // bottom 
+    if(y > 0){ // top 
         neighbors.push([x, y - 1]);
     }
     
