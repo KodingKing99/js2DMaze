@@ -35,18 +35,18 @@ let getNeighbors = (x, y) => {
 let getWallChar = (wall, x, y) => {
     // left
     if(wall[0] === x - 1 && wall[1] === y){
-        return ["TOP", "|"]
+        return ["LEFT", "|"]
     }
     // top
     if(wall[0] === x && wall[1] === y + 1){
-        return ["RIGHT", "-"]
+        return ["BOTTOM", "-"]
     }
     // right
     if(wall[0] === x + 1 && wall[1] === y){
-        return ["BOTTOM", "|"]
+        return ["RIGHT", "|"]
     }
     if(wall[0] === x && wall[1] === y - 1){
-        return ["LEFT", "_"]
+        return ["TOP", "_"]
     }
      
 
@@ -88,10 +88,10 @@ let getCell = (x, y) => {
         
     }
     // Removes a wall from walls array
-    that.removeWall = function(x, y) {
+    that.removeWall = function(xcord, ycord) {
         let wallsCopy = [...this.walls];
 
-        wallsCopy.splice(findIndexForTuple(this.walls, x, y), 1);
+        wallsCopy.splice(findIndexForTuple(this.walls, xcord, ycord), 1);
         this.walls = wallsCopy;
     }
     that.reportNeighbors = function(){
@@ -200,9 +200,9 @@ let getGameState = (width, height) => {
     //     }
     //     // return retString;
     // }
-    that.addNeighborsToFrontier = function(x, y) {
+    that.addNeighborsToFrontier = function(xcord, ycord) {
         // get neighbors
-        let neigbors = getNeighbors(x, y);
+        let neigbors = getNeighbors(xcord, ycord);
         // loop through, add neighbor to frontier if it is not in the maze
         for(let i = 0; i < neigbors.length; i++){
             let myCell = maze[neigbors[i][0]][neigbors[i][1]];
@@ -269,13 +269,13 @@ let spreadMazeCells = (state) => {
 }
 let generateMaze = (width, height) => {
     let gamestate = getGameState(width, height);
-    // console.log(gamestate);
-    // gamestate.reportMazeWalls()
+    console.log(gamestate);
+    gamestate.reportMazeWalls()
     addCellToMaze(gamestate); 
     spreadMazeCells(gamestate);
-    // console.log("Ending State")
-    // console.log(gamestate)
-    // gamestate.reportMazeWalls()
+    console.log("Ending State")
+    console.log(gamestate)
+    gamestate.reportMazeWalls()
     return gamestate;
 }
 // generateMaze(WIDTH, HEIGHT);
