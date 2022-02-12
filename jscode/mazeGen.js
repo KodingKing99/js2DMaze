@@ -1,6 +1,6 @@
 // Grid size x and y
-let WIDTH = 3;
-let HEIGHT = 3;
+let WIDTH = 25;
+let HEIGHT = 25;
 let findIndexForTuple = (array, x, y) => {
     let index = -1;
     for(let i = 0; i < array.length; i++){
