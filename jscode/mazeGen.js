@@ -269,13 +269,13 @@ let spreadMazeCells = (state) => {
 }
 let generateMaze = (width, height) => {
     let gamestate = getGameState(width, height);
-    console.log(gamestate);
-    gamestate.reportMazeWalls()
+    // console.log(gamestate);
+    // gamestate.reportMazeWalls()
     addCellToMaze(gamestate); 
     spreadMazeCells(gamestate);
-    console.log("Ending State")
-    console.log(gamestate)
-    gamestate.reportMazeWalls()
-
+    // console.log("Ending State")
+    // console.log(gamestate)
+    // gamestate.reportMazeWalls()
+    return gamestate;
 }
-generateMaze(WIDTH, HEIGHT);
+// generateMaze(WIDTH, HEIGHT);
